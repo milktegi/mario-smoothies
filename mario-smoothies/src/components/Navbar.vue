@@ -2,13 +2,13 @@
 	<div class="navbar">
 		<nav class="nav-extended red accent-2">
 			<div class="nav-content">
-				<router-link to="">
+				<router-link :to="{ name: 'Index' }">
 					<span class="nav-title">
 						mario smoothies
 					</span>
 				</router-link>
-				<a href="" class="btn-floating btn-large halfway-fab pink">
-					<router-link to="">
+				<a href="" class="btn-floating btn-large halfway-fab blue">
+					<router-link :to="{ name: 'AddSmoothie' }">
 						<!-- 구글 아이콘 + sign-->
 						<i class="material-icons">add</i>	
 					</router-link>
