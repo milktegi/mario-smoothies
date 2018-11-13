@@ -10,7 +10,8 @@
     storageBucket: "mario-smoothies-607f9.appspot.com",
     messagingSenderId: "948518014927"
   };
-  const firebaseApp = firebase.initializeApp(config);
+const firebaseApp = firebase.initializeApp(config);
+
 firebaseApp.firestore().settings({ timestampsInSnapshots: true })
   // export firestore database 
 

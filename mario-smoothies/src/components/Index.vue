@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     deleteSmoothie(id){
+      console.log(id)
       this.smoothies = this.smoothies.filter(smoothie => {
         return smoothie.id !== id
       })
@@ -45,7 +46,9 @@ export default {
     .then(snapshot => {
       // snapshot refers to the collection 
       snapshot.forEach(doc => {
+        // console.log(doc)
         let smoothie = doc.data()
+        // console.log(smoothie)
         smoothie.id = doc.id
         this.smoothies.push(smoothie)
       })
