@@ -12,6 +12,10 @@
 		name="add-ingredient"
 		@keydown.tab.prevent="addIng" v-model="another">
 	</div>
+	<div v-for="(ing, index) in ingredients" :key="index">
+		<label for="ingredient">Added Ingredient: </label>
+		<input type="text" name="ingredient" v-model="ingredients[index]">
+	</div>
 	<div class="field center align">
 		<p v-if="feedback" class="red">{{ feedback }}</p>
 		<button class="btn blue">add smoothie</button>
@@ -44,8 +48,8 @@ export default {
 		  } else {
 			  this.feedback = 'You must enter a value to add an ingredient'
 		  }
-	  }
-  }
+	  	}
+  	}
 };
 </script>
 
@@ -54,7 +58,7 @@ export default {
 .add-smoothie{
 	margin-top: 30px;
 	/* margin-bottom: 30px; */
-	padding: 40px;
+	padding: 20px;
 	max-width: 500px;
 }
 .add-smoothie h2{
