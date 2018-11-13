@@ -19,42 +19,44 @@
 </template>
 
 <script>
-
-import db from '@/firebase/init'
+import db from "@/firebase/init";
 
 export default {
-  name: 'Index',
-  data () {
+  name: "Index",
+  data() {
     return {
-
-      smoothies: [
-     
-      ]
-    }
+      smoothies: []
+    };
   },
   methods: {
-    deleteSmoothie(id){
-      console.log(id)
-      this.smoothies = this.smoothies.filter(smoothie => {
-        return smoothie.id !== id
-      })
+    deleteSmoothie(id) {
+      //delete doc from firestore
+      db.collection("smoothies")
+        .doc(id)
+        .delete()
+        .then(() => {
+          this.smoothies = this.smoothies.filter(smoothie => {
+            return smoothie.id !== id;
+          });
+        });
     }
   },
   created() {
     // fech data from the firestore
-    db.collection('smoothies').get()
-    .then(snapshot => {
-      // snapshot refers to the collection 
-      snapshot.forEach(doc => {
-        // console.log(doc)
-        let smoothie = doc.data()
-        // console.log(smoothie)
-        smoothie.id = doc.id
-        this.smoothies.push(smoothie)
-      })
-    })
+    db.collection("smoothies")
+      .get()
+      .then(snapshot => {
+        // snapshot refers to the collection
+        snapshot.forEach(doc => {
+          // console.log(doc)
+          let smoothie = doc.data();
+          // console.log(smoothie)
+          smoothie.id = doc.id;
+          this.smoothies.push(smoothie);
+        });
+      });
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -65,7 +67,7 @@ export default {
   grid-gap: 30px;
   margin-top: 60px;
 }
-.index h2{
+.index h2 {
   font-size: 1.8em;
   text-align: center;
   margin-top: 0px;
@@ -73,7 +75,7 @@ export default {
 .index .ingredients {
   margin: 30px auto;
 }
-.index .ingredients li{
+.index .ingredients li {
   display: inline-block;
 }
 .index .delete {
