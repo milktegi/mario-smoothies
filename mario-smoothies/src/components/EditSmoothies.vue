@@ -1,6 +1,27 @@
 <template>
 	<div v-if="smoothie" class="edit-smoothie container">
 		<h2>Edit {{ smoothie.title }} </h2>
+		<form @submit.prevent="EditSmoothie">
+	<div class="field title">
+		<label for="title">smoothie title:</label>
+		<input type="text" name="title" v-model="smoothie.title">
+	</div>
+	<div class="field add-ingredient">
+		<label for="add-ingredient">add an ingredient:</label>
+		<input type="text" 
+		name="add-ingredient"
+		@keydown.tab.prevent="addIng" v-model="another">
+	</div>
+	<div v-for="(ing, index) in smoothie.ingredients" :key="index" class="field">
+		<label for="ingredient">Added Ingredient: </label>
+		<input type="text" name="ingredient" v-model="smoothie.ingredients[index]">
+		<i class="material-icons delete" @click="deleteIng(ing)">delete</i>
+	</div>
+	<div class="field center align">
+		<p v-if="feedback" class="red">{{ feedback }}</p>
+		<button class="btn blue">update smoothie</button>
+	</div>
+</form>
 	</div>
 </template>
 
@@ -12,8 +33,34 @@ export default {
 	name: 'EditSmoothie',
 	data() {
 		return {
-			smoothie: null
+			smoothie: null,
+			another: null,
+			feedback: null
 		}
+	},
+	methods: {
+
+	EditSmoothie() {
+
+		console.log(this.smoothie.title, this.smoothie.ingredients)
+
+	},
+
+	addIng() {
+		  if(this.another) {
+			this.smoothie.ingredients.push(this.another)
+			//   console.log(this.ingredients)
+			this.another = null
+			this.feedback = null
+		  } else {
+			  this.feedback = 'You must enter a value to add an ingredient'
+		  }
+	},
+	  deleteIng(ing){
+		  this.smoothie.ingredients = this.smoothie.ingredients.filter(ingredient => {
+			  return ingredient != ing
+		  })
+	  	}
 	},
 	created() {
 		let ref = db.collection('smoothies')
@@ -31,10 +78,32 @@ export default {
 
 <style>
 
+.edit-smoothie{
+	margin-top: 30px;
+	/* margin-bottom: 30px; */
+	padding: 20px;
+	max-width: 500px;
+}
 .edit-smoothie h2{
 	font-size: 2em;
 	margin: 20px auto;
 }
+.edit-smoothie .field{
+	margin: 20px auto;
+	position: relative;
+}
 
+form {
+	margin-top: 40px;
+}
+
+.edit-smoothie .delete{
+	position: absolute;
+	right: 0;
+	bottom: 16px;
+	color: #aaa;
+	font-size: 1.4em;
+	cursor: pointer;
+}
 
 </style>
