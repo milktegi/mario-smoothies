@@ -1,4 +1,4 @@
-  import firebase from 'firebase'
+  import firebase from 'firebase/App'
   import firestore from 'firebase/firestore'
   
   // Initialize Firebase
